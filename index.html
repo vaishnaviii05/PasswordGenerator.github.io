@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Password Generator</title>
+    <style>
+        /* Base styles */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom right, #6a11cb, #2575fc);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: white;
+        }
+
+        /* Container */
+        .container {
+            width: 350px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            animation: fadeIn 2s ease-in-out;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        label {
+            font-size: 16px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 10px;
+            outline: none;
+            font-size: 16px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.3s ease;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+            background: linear-gradient(to right, #feb47b, #ff7e5f);
+        }
+
+        #password {
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            animation: bounceIn 1s ease-in-out;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            60% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Password Generator</h2>
+        <label for="length">Enter Password Length:</label>
+        <input type="number" id="length" placeholder="E.g., 12">
+        <button onclick="generatePassword()">Generate Password</button>
+        <p id="password"></p>
+    </div>
+
+    <script>
+        function generatePassword() {
+            const length = document.getElementById("length").value;
+            if (length < 1) {
+                document.getElementById("password").innerText = "Please enter a valid length.";
+                return;
+            }
+
+            const lowercase = "abcdefghijklmnopqrstuvwxyz";
+            const uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            const digits = "0123456789";
+            const symbols = "!@#$%^&*()_+-=[]{}|;:'\",.<>?/";
+
+            const allChars = lowercase + uppercase + digits + symbols;
+            let password = "";
+
+            for (let i = 0; i < length; i++) {
+                const randomIndex = Math.floor(Math.random() * allChars.length);
+                password += allChars[randomIndex];
+            }
+
+            document.getElementById("password").innerText = "Your Password: " + password;
+
+            // Add bounce effect
+            const passwordElement = document.getElementById("password");
+            passwordElement.style.animation = "none";
+            setTimeout(() => {
+                passwordElement.style.animation = "bounceIn 1s ease-in-out";
+            }, 0);
+        }
+    </script>
+</body>
+</html>
